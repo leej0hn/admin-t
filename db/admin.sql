@@ -869,3 +869,28 @@ INSERT INTO `sys_user_role` VALUES ('7', '2');
 INSERT INTO `sys_user_role` VALUES ('7', '7');
 INSERT INTO `sys_user_role` VALUES ('8', '2');
 INSERT INTO `sys_user_role` VALUES ('9', '1');
+
+
+-- ----------------------------
+-- Table structure for `g7_oa_import_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `g7_oa_import_log`;
+CREATE TABLE `g7_oa_import_log` (
+  `id` varchar(64) NOT NULL COMMENT '编号',
+  `batch_id` varchar(12) NOT NULL COMMENT '导入批次号',
+  `alias` varchar(64) NOT NULL COMMENT '微信ID',
+  `niki_name` varchar(64) DEFAULT NULL COMMENT '微信昵称',
+  `user_name` varchar(64) DEFAULT NULL COMMENT '微信用户名',
+  `service_type_info` varchar(64) DEFAULT NULL COMMENT '微信认证类型',
+  `article_url` varchar(1024) DEFAULT NULL COMMENT '公众号文章URL',
+  `trigger_name` varchar(64) DEFAULT NULL COMMENT '监控时间表达式名称',
+  `status` varchar(256) DEFAULT NULL COMMENT '微信状态',
+  `create_by` varchar(64) NOT NULL COMMENT '创建者',
+  `create_date` datetime NOT NULL COMMENT '创建时间',
+  `update_by` varchar(64) NOT NULL COMMENT '更新者',
+  `update_date` datetime NOT NULL COMMENT '更新时间',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`),
+  KEY `batch_id` (`batch_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公众号导入日志表';

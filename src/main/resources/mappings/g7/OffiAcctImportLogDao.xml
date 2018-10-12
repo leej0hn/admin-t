@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redscarf.admin.modules.g7.dao.OffiAcctImportLogDao">
+    
+	<sql id="offiAcctImportLogColumns">
+		a.id AS "id",
+		a.batch_id AS "batchId",
+		a.alias AS "alias",
+		a.niki_name AS "nikiName",
+		a.user_name AS "userName",
+		a.service_type_info AS "serviceTypeInfo",
+		a.article_url AS "articleUrl",
+		a.trigger_name AS "triggerName",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="offiAcctImportLogJoins">
+	</sql>
+    
+	<select id="get" resultType="OffiAcctImportLog">
+		SELECT 
+			<include refid="offiAcctImportLogColumns"/>
+		FROM g7_oa_import_log a
+		<include refid="offiAcctImportLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OffiAcctImportLog">
+		SELECT 
+			<include refid="offiAcctImportLogColumns"/>
+		FROM g7_oa_import_log a
+		<include refid="offiAcctImportLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="batchId != null and batchId != ''">
+				AND a.batch_id = #{batchId}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OffiAcctImportLog">
+		SELECT 
+			<include refid="offiAcctImportLogColumns"/>
+		FROM g7_oa_import_log a
+		<include refid="offiAcctImportLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO g7_oa_import_log(
+			id,
+			batch_id,
+			alias,
+			niki_name,
+			user_name,
+			service_type_info,
+			article_url,
+			trigger_name,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{batchId},
+			#{alias},
+			#{nikiName},
+			#{userName},
+			#{serviceTypeInfo},
+			#{articleUrl},
+			#{triggerName},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE g7_oa_import_log SET 	
+			batch_id = #{batchId},
+			alias = #{alias},
+			niki_name = #{nikiName},
+			user_name = #{userName},
+			service_type_info = #{serviceTypeInfo},
+			article_url = #{articleUrl},
+			trigger_name = #{triggerName},
+			status = #{status},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE g7_oa_import_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<select id="findBatchDayCount" resultType="int">
+		SELECT COUNT(DISTINCT (a.batch_id))
+		FROM g7_oa_import_log a
+		WHERE a.batch_id LIKE CONCAT(#{batchId}, '%')
+		AND a.del_flag = #{DEL_FLAG_NORMAL}
+
+	</select>
+	
+</mapper>
