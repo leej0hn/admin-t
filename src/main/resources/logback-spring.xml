@@ -25,35 +25,32 @@
 		</encoder>
 	</appender>
 
-    <!-- 仅以天为单位分割
-     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
-        </encoder>
-        <file>${LOG_FILE}/info/info.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>365</maxHistory>
-        </rollingPolicy>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
-    </appender>
-    -->
+	<!--
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/info/%d{yyyy-MM-dd}/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+			<maxHistory>365</maxHistory>
+			<maxFileSize>10MB</maxFileSize>
+			<totalSizeCap>10GB</totalSizeCap>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+	-->
 
 	<!-- file-appender.xml -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<encoder>
 			<pattern>${FILE_LOG_PATTERN}</pattern>
 		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${LOG_FILE}/info/%d{yyyy-MM-dd}/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+		<file>${LOG_FILE}/info/info.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>365</maxHistory>
-			<!-- 每个文件大小 -->
-			<maxFileSize>10MB</maxFileSize>
-			<!-- 所有归档日志文件的总大小 -->
-			<totalSizeCap>10GB</totalSizeCap>
 		</rollingPolicy>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>INFO</level>
@@ -64,14 +61,11 @@
 		<encoder>
 			<pattern>${FILE_LOG_PATTERN}</pattern>
 		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+		<file>${LOG_FILE}/debug/debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${LOG_FILE}/debug/%d{yyyy-MM-dd}/debug-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+			<fileNamePattern>${LOG_FILE}/debug/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>365</maxHistory>
-			<!-- 每个文件大小 -->
-			<maxFileSize>10MB</maxFileSize>
-			<!-- 所有归档日志文件的总大小 -->
-			<totalSizeCap>10GB</totalSizeCap>
 		</rollingPolicy>
 		<!-- 此日志文件只记录DEBUG级别的 -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -85,14 +79,11 @@
 		<encoder>
 			<pattern>${FILE_LOG_PATTERN}</pattern>
 		</encoder>
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+		<file>${LOG_FILE}/error/error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${LOG_FILE}/error/%d{yyyy-MM-dd}/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+			<fileNamePattern>${LOG_FILE}/error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>365</maxHistory>
-			<!-- 每个文件大小 -->
-			<maxFileSize>10MB</maxFileSize>
-			<!-- 所有归档日志文件的总大小 -->
-			<totalSizeCap>10GB</totalSizeCap>
 		</rollingPolicy>
 		<!-- 此日志文件只记录ERROR级别的 -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
